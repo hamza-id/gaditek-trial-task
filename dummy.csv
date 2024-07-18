@@ -1,0 +1,11 @@
+product_name,category,price,quantity_in_stock,supplier,added_date
+Laptop,Electronics,1200.99,50,Tech Supplies,2023-01-15
+Headphones,Electronics,199.99,150,Audio World,2022-12-05
+Office Chair,Furniture,350.00,75,Office Essentials,2023-02-20
+Desk Lamp,Lighting,45.50,200,Home Decor,2023-03-10
+Smartphone,Electronics,799.99,80,Mobile Hub,2023-04-12
+Water Bottle,Accessories,25.00,300,Outdoor Supplies,2023-05-01
+Gaming Monitor,Electronics,499.99,60,Gaming Gear,2023-06-18
+Printer,Electronics,150.00,40,Print Solutions,2023-07-30
+Notebook,Stationery,10.99,500,Office Essentials,2023-08-15
+Desk Organizer,Office Supplies,29.99,250,Office Essentials,2023-09-05

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Todo\TodoRequest;
+use App\Http\Services\StatusService;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 use App\Http\Services\TodoService;
 use App\Helpers\ResponseHelper;
-use App\Http\Services\StatusService;
 use Exception;
 
 class TodoController extends Controller
@@ -27,6 +28,7 @@ class TodoController extends Controller
             $todos = $this->todoService->list();
             return ResponseHelper::success($todos, 'Todos retrieved successfully.');
         } catch (Exception $e) {
+            Log::error($e);
             return ResponseHelper::error('Failed to retrieve todos.', 500, $e->getMessage());
         }
     }
@@ -46,6 +48,7 @@ class TodoController extends Controller
             $todo = $this->todoService->create($validatedData);
             return ResponseHelper::success($todo, 'Todo created successfully.', 201);
         } catch (Exception $e) {
+            Log::error($e);
             return ResponseHelper::error('Failed to create todo.', 500, $e->getMessage());
         }
     }
@@ -59,6 +62,7 @@ class TodoController extends Controller
             $todo = $this->todoService->fetch($id);
             return ResponseHelper::success($todo, 'Todo retrieved successfully.');
         } catch (Exception $e) {
+            Log::error($e);
             return ResponseHelper::error('Todo not found.', 404, $e->getMessage());
         }
     }
@@ -79,6 +83,7 @@ class TodoController extends Controller
 
             return ResponseHelper::success($todo, 'Todo updated successfully.');
         } catch (Exception $e) {
+            Log::error($e);
             return ResponseHelper::error('Failed to update todo.', 500, $e->getMessage());
         }
     }
@@ -92,6 +97,7 @@ class TodoController extends Controller
             $this->todoService->delete($id);
             return ResponseHelper::success(null, 'Todo deleted successfully.');
         } catch (Exception $e) {
+            Log::error($e);
             return ResponseHelper::error('Failed to delete todo.', 500, $e->getMessage());
         }
     }
