@@ -1,0 +1,52 @@
+version: "3.7"
+
+services:
+  app:
+    build:
+      args:
+        user: hamza
+        uid: 1000
+      context: ./
+      dockerfile: DockerFile
+    image: gaditek-trial-task
+    container_name: gaditek-trial-task-app
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - db
+    command: sh -c "sleep 15  && composer install && php artisan key:generate && php artisan optimize && php artisan migrate && php artisan db:seed --force && php artisan serve --host=0.0.0.0 --port=9000"
+    ports:
+      - "9000:9000"
+    networks:
+      - gaditek-trial-task
+
+  db:
+    image: mysql:8.0
+    container_name: gaditek-trial-task-db
+    environment:
+      MYSQL_DATABASE: gaditek-trial-task
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: password
+      MYSQL_USER: user
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./mysql:/docker-entrypoint-initdb.d
+    networks:
+      - gaditek-trial-task
+
+  nginx:
+    image: nginx:alpine
+    container_name: gaditek-trial-task-nginx
+    ports:
+      - 8001:80
+    volumes:
+      - ./:/var/www
+      - ./nginx:/etc/nginx/conf.d/
+    networks:
+      - gaditek-trial-task
+
+networks:
+  gaditek-trial-task:
+    driver: bridge
